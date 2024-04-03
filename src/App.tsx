@@ -1,29 +1,22 @@
+import Layout from "./pages/Layout"
+import LoginPage from "./pages/LoginPage"
 import { Route, Routes } from "react-router-dom"
-import { AuthProvider } from "./auth/Auth.js"
-import SignInPage from "./pages/SigninPage.js"
-import PlayListPage from "./pages/PlaylistPage.js"
-import RequireAuth from "./auth/RequireAuth.js"
-import Layout from "./pages/Layout.js"
+import ProfilePage from "./pages/ProfilePage"
+import RequireAuth from "./pages/RequireAuth"
 
 function App() {
-
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<SignInPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route
-            path="/playlist"
-            element={
-              <RequireAuth>
-                <PlayListPage />
-              </RequireAuth>
-            }
-          />
-        </Route>
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route path='/' element={<p>Home page</p>} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/profile' element={
+          <RequireAuth>
+            <ProfilePage />
+          </RequireAuth>
+        } />
+      </Route>
+    </Routes>
   )
 }
 
