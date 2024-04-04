@@ -1,4 +1,4 @@
-import { useSpotify } from "./SpotifyProvider";
+import useSpotify from "../spotify/useSpotify";
 
 export default function AuthInfo() {
   const {loggedIn, login, logout} = useSpotify()

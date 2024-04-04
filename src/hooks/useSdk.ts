@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSpotify } from "../pages/SpotifyProvider";
+import useSpotify from "../spotify/useSpotify";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 
 type UseSdkParams<T> = {

@@ -1,17 +1,8 @@
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode } from "react";
 import { useCallback, useEffect, useState } from 'react'
 import { SpotifyApi, AuthorizationCodeWithPKCEStrategy } from '@spotify/web-api-ts-sdk';
 import { Scopes } from '@spotify/web-api-ts-sdk';
-
-type SpotifyContextType = {
-  loggedIn: boolean,
-  login: () => void,
-  logout: () => void,
-  sdk: SpotifyApi | null,
-  error: Error | null
-}
-
-const SpotifyContext = createContext<SpotifyContextType>(null!);
+import { SpotifyContext } from "./SpotifyContext";
 
 type SpotifyProviderProps = {
   children: ReactNode
@@ -95,6 +86,3 @@ export default function SpotifyProvider({ children }: SpotifyProviderProps) {
   return <SpotifyContext.Provider value={contextValue}>{children}</SpotifyContext.Provider>
 }
 
-export function useSpotify() {
-  return useContext(SpotifyContext)
-}

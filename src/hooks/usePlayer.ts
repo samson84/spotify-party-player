@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSpotify } from "../pages/SpotifyProvider"
+import useSpotify from "../spotify/useSpotify";
 import { TrackItem } from "@spotify/web-api-ts-sdk";
 
 type UsePlayerParams = {
-  deviceId: string
-}
+  deviceId: string;
+};
 
 export default function usePlayer({ deviceId }: UsePlayerParams) {
   const [queue, setQueue] = useState<TrackItem[]>([]);

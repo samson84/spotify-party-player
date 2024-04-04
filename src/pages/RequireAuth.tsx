@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useSpotify } from "./SpotifyProvider";
+import useSpotify from "../spotify/useSpotify";
 import { ReactNode } from "react";
 
 type RequireAuthProps = {
