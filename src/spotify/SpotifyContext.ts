@@ -6,7 +6,8 @@ type SpotifyContextType = {
   login: () => void,
   logout: () => void,
   sdk: SpotifyApi | null,
-  error: Error | null
+  error: Error | null,
+  loading: boolean
 }
 
 export const SpotifyContext = createContext<SpotifyContextType>(null!);

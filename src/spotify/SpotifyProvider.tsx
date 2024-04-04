@@ -33,6 +33,7 @@ export default function SpotifyProvider({ children }: SpotifyProviderProps) {
   const [sdk, setSdk] = useState<SpotifyApi | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const logout = useCallback(() => {
     sdk?.logOut();
@@ -53,9 +54,10 @@ export default function SpotifyProvider({ children }: SpotifyProviderProps) {
         setLoggedIn(true);
       } else {
         setSdk(null);
+        setLoggedIn(false);
       }
     } catch (e) {
-      if(!(e instanceof Error)) {
+      if (!(e instanceof Error)) {
         throw e
       }
       if (e && e.message && e.message.includes("No verifier found in cache")) {
@@ -65,24 +67,29 @@ export default function SpotifyProvider({ children }: SpotifyProviderProps) {
         setLoggedIn(false);
         setSdk(null);
       }
+    } finally {
+      setLoading(false);
     }
   }, [])
 
   useEffect(() => {
+    let ignore = false;
     (async () => {
       const internalSdk = createSdk();
       const accessToken = await internalSdk.getAccessToken()
-      if(accessToken) {
+      if(ignore) return;        
+      if (accessToken) {
         setSdk(internalSdk)
         setLoggedIn(true)
-      } else if(hasCode()) {
+        setLoading(false)
+      } else if (hasCode()) {
         await login()
       }
-
     })()
+    return () => { ignore = true }
   }, [login]);
 
-  const contextValue = { sdk, login, logout, error, loggedIn };
+  const contextValue = { sdk, login, logout, error, loggedIn, loading };
   return <SpotifyContext.Provider value={contextValue}>{children}</SpotifyContext.Provider>
 }
 
