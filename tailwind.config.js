@@ -71,6 +71,13 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      gap: {
+        'lg': '1rem',
+      },
+      fontSize: {
+        'hero': '4rem',
+        'sm-hero': '3rem'
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
