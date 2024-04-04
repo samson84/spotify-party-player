@@ -8,9 +8,8 @@ type RequireAuthProps = {
 }
 
 export default function RequireAuth({ children }: RequireAuthProps) {
-  const { loggedIn, loading } = useSpotify()
+  const { loggedIn } = useSpotify()
 
-  console.log('loading', loading, 'loggedIn', loggedIn)
 
   if (!loggedIn) {
     return <Navigate to={`${ROUTES.LOGIN}`} />
