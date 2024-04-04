@@ -18,7 +18,13 @@ type SpotifyProviderProps = {
 }
 
 const CLIENT_ID = '29b12131f1fc46c586009a6570aad5da';
-const SCOPES = Scopes.userDetails;
+const SCOPES = [
+  ...Scopes.userDetails,
+  ...Scopes.playlistRead,
+  ...Scopes.userPlaybackModify,
+  ...Scopes.userPlaybackRead,
+  ...Scopes.userPlayback
+];
 const REDIRECT_URI = 'http://localhost:5173';
 
 function createSdk() {
