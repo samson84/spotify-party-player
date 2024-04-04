@@ -1,10 +1,10 @@
-import Layout from "./pages/Layout"
-import LoginPage from "./pages/LoginPage"
+import Layout from "./features/router/Layout"
+import LoginPage from "./features/router/LoginPage"
 import { Route, Routes } from "react-router-dom"
-import PlayerPage from "./pages/PlayerPage"
-import RequireAuth from "./pages/RequireAuth"
-import { ROUTES } from './routes'
-import useSpotify from "./spotify/useSpotify"
+import PlayerPage from "./features/router/PlayerPage"
+import RequireAuth from "./features/router/RequireAuth"
+import { ROUTES } from './features/router/routes'
+import useSpotify from "./features/spotify/useSpotify"
 
 function App() {
   const { loading } = useSpotify()

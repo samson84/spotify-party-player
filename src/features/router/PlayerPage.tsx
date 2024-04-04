@@ -1,8 +1,6 @@
-import usePlayer from "../hooks/usePlayer"
-import usePlayList from "../hooks/usePlaylist"
-import useProfile from "../hooks/useProfile"
-
-// https://open.spotify.com/playlist/3RKHhNbHpcbrunYzfBKOfA?si=ec5b0c835b4943f4
+import usePlayer from "../spotify/usePlayer"
+import usePlayList from "../spotify/usePlaylist"
+import useProfile from "../spotify/useProfile"
 
 const DEVICE_ID = '02940197b816cec9220982859d06013182f80dd4'
 
