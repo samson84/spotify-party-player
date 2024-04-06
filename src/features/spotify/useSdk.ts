@@ -14,6 +14,7 @@ export default function useSdk<T>({ action }: UseSdkParams<T>) {
   const { sdk } = useSpotify();
 
   useEffect(() => {
+    let ignore = false;
     (async () => {
       setLoading(true)
       try {
@@ -21,7 +22,9 @@ export default function useSdk<T>({ action }: UseSdkParams<T>) {
           return;
         }
         const response = (await action(sdk)) ?? null;
-
+        if (ignore) {
+          return;
+        }
         setData(response);
 
       } catch (e) {
@@ -34,6 +37,9 @@ export default function useSdk<T>({ action }: UseSdkParams<T>) {
         setLoading(false)
       }
     })()
+    return () => {
+      ignore = true;
+    }
   }, [sdk, action])
 
   return { data, loading, error }
