@@ -74,8 +74,8 @@ export default function usePlayer({ deviceId }: UsePlayerParams) {
   }, [sdk, update])
 
 
-  async function play(tracks: string[]) {
-    await sdk?.player.startResumePlayback(deviceId, undefined, tracks)
+  async function playContext(contextUri: string) {
+    await sdk?.player.startResumePlayback(deviceId, contextUri)
     await update();
   }
 
@@ -94,5 +94,5 @@ export default function usePlayer({ deviceId }: UsePlayerParams) {
     await update();
   }
 
-  return { play, pause, enqueue, queue, playbackState, resume, update }
+  return { playContext, pause, enqueue, queue, playbackState, resume, update }
 }

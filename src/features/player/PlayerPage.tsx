@@ -1,18 +1,19 @@
+import { Button } from "@/components/ui/button"
 import usePlayer from "../spotify/usePlayer"
 import usePlayList from "../spotify/usePlaylist"
 import Player from "./Player"
+import { Muted } from "@/components/Typography"
 
 const DEVICE_ID = '02940197b816cec9220982859d06013182f80dd4'
 const PLAYLIST_ID = '3RKHhNbHpcbrunYzfBKOfA'
+const PLAYLIST_URI = 'spotify:playlist:3RKHhNbHpcbrunYzfBKOfA'
 
 export default function ProfilePage() {
   const { data: playlist, loading: playlistLoading, error } = usePlayList(PLAYLIST_ID)
-  const { play, pause, enqueue, queue, resume, playbackState, update } = usePlayer({ deviceId: DEVICE_ID })
+  const { playContext, pause, enqueue, queue, resume, playbackState, update } = usePlayer({ deviceId: DEVICE_ID })
 
-  console.log(playbackState)
-
-  async function handlePlay(trackId: string) {
-    await play([`spotify:track:${trackId}`])
+  async function handlePlay() {
+    await playContext(PLAYLIST_URI)
   }
 
   if (playlistLoading) {
@@ -26,20 +27,28 @@ export default function ProfilePage() {
   if (playlist) {
     return (
       <div className="mt-md">
-        <Player 
+        <Player
           playbackState={playbackState}
           onPause={pause}
           onResume={resume}
           onTrackFinish={update}
         />
-        <h3>🎤 Playlist</h3>
+        <section className="flex gap-sm items-center">
+          <Button>Add Song</Button>
+          <Button
+            variant={"outline"}
+            onClick={handlePlay}
+            disabled={playbackState?.playing}
+          >
+            Start playlist
+          </Button>
+          <Muted>{playlist.name}</Muted>
+        </section>
         {playlist.tracks.items.map((item) => (
           <div key={item.track.id}>
-            <button
-              onClick={() => handlePlay(item.track.id)}
-            >
+            <span>
               🎶{item.track.name}
-            </button>
+            </span>
             <button
               onClick={() => enqueue(`spotify:track:${item.track.id}`)}
             >
