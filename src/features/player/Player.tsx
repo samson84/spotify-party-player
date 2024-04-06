@@ -3,6 +3,7 @@ import PlayButton from "./PlayButton";
 import { PlaybackStateType } from "../spotify/usePlayer";
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
+import * as T from "@/components/Typography"; 
 
 type PlayerProps = {
   playbackState: PlaybackStateType | null,
@@ -45,17 +46,17 @@ export default function Player({ playbackState, onResume, onPause, onTrackFinish
 
   return (
     <>
-      <section className="flex gap-lg">
+      <section className="flex gap-lg items-center">
         <PlayButton onResume={onResume} onPause={onPause} playing={playbackState?.playing ?? false} />
         <section className="grow">
-          <h2 className="text-title tracking-wide">{playbackState?.track.name}</h2>
-          <h3 className="font-medium text-lg">{playbackState?.track.artists?.join(',')}</h3>
-          <h3 className="text-sm text-muted-foreground">{playbackState?.track.album}</h3>
+          <T.Large>{playbackState?.track.name}</T.Large>
+          <T.Small>{playbackState?.track.artists?.join(', ')} </T.Small>
+          <T.Muted>{playbackState?.track.album}</T.Muted>
           <section className="flex items-center">
             <Progress value={progressPercent} className="grow" />
-            <span className="text-sm text-muted-foreground">
+            <T.Muted>
               {displayTime(currentProgressMs)}/{displayTime(trackDurationMs)}
-            </span>
+            </T.Muted>
           </section>
         </section>
       </section>

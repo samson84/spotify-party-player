@@ -12,14 +12,14 @@ export default function PlayButton({onPause, onResume, playing} : PlayButtonProp
   return (
     playing 
       ? <Button 
-          variant='outline'
+          variant='ghost'
           size='large-icon'
           onClick={onPause}
         >
           <CirclePause className="h-24 w-24"/>
         </Button>
       : <Button 
-        variant='outline'
+        variant='ghost'
         size='large-icon'
         onClick={onResume}
         >
