@@ -14,7 +14,7 @@ const SCOPES = [
   ...Scopes.playlistRead,
   ...Scopes.userPlaybackModify,
   ...Scopes.userPlaybackRead,
-  ...Scopes.userPlayback
+  ...Scopes.userPlayback,
 ];
 const REDIRECT_URI = 'http://localhost:5173';
 
