@@ -76,7 +76,11 @@ module.exports = {
       },
       fontSize: {
         'hero': '4rem',
-        'sm-hero': '3rem'
+        'sm-hero': '3rem',
+        'title': '2rem',
+      },
+      spacing: {
+        'lg': '1rem',
       }
     },
   },

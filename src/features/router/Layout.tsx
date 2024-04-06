@@ -1,16 +1,29 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import AuthInfo from "./AuthInfo";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function Layout() {
   return (
-    <div>
-      <h1>Welcome to the Playlist!</h1>
-      <AuthInfo />
-      <nav>
-        <Link to="/profile">📎 Go to Profile Page</Link>
-        <Link to="/">📎 Go to Home</Link>
-      </nav>
-      <Outlet />
+    <div className="w-full min-h-screen flex p-lg">
+      <Card className="shadow-xl flex-grow">
+        <CardHeader>
+          <div className="flex items-center">
+            <header className="grow">
+              <CardTitle>Welcome to the Playlist!</CardTitle>
+            </header>
+            <nav className="flex">
+              <AuthInfo />
+            </nav>
+          </div>
+        </CardHeader>
+        <Separator />
+        <CardContent>
+          <main>
+            <Outlet />
+          </main>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,17 +1,12 @@
+import { Button } from "@/components/ui/button";
 import useSpotify from "../spotify/useSpotify";
 
 export default function AuthInfo() {
-  const {loggedIn, login, logout} = useSpotify()
-  
-  if (loggedIn) {
-    return <>
-      <p>Logged in!</p>
-      <button onClick={logout}>Logout</button>
+  const { loggedIn, logout } = useSpotify()
+
+  return (
+    <>
+      {loggedIn && <Button variant='secondary' onClick={logout}>Logout</Button>}
     </>
-  } else {
-    return <>
-      <p>Logged out!</p>
-      <button onClick={login}>Login</button>
-    </>
-  }
+  )
 }
