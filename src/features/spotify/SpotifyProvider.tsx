@@ -84,6 +84,8 @@ export default function SpotifyProvider({ children }: SpotifyProviderProps) {
         setLoading(false)
       } else if (hasCode()) {
         await login()
+      } else {
+        setLoading(false);
       }
     })()
     return () => { ignore = true }
