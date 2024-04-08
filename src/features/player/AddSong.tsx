@@ -10,8 +10,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import useSearch from "../spotify/useSearch"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { Input } from "@/components/ui/input"
+import SearchedTrack from "./SearchedTrack"
 
 function debounce(func: (...args: unknown[]) => unknown, timeout: number = 500) {
   let timer: NodeJS.Timeout | null = null;
@@ -25,7 +26,6 @@ function debounce(func: (...args: unknown[]) => unknown, timeout: number = 500) 
 }
 
 const debounced = debounce((v) => console.log('debounced', v), 2000);
-
 
 export default function AddSong() {
   const [query, setQuery] = useState('');
@@ -58,13 +58,15 @@ export default function AddSong() {
         <div className="grow overflow-y-auto mt-md px-4">
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error.message}</p>}
-
-          {results && (
-            results.tracks?.items.map(track => <p>{track.name} ({track.artists.map(a => a.name).join(", ")})</p>)
-          )}
+          <div className="flex flex-row flex-wrap gap-md">
+            {results && (
+              results.map(track => (
+              <div className="flex-auto"><SearchedTrack key={track.id} track={track} /></div>
+            ))
+            )}
+          </div>
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
           <DrawerClose>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>

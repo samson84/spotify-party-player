@@ -1,6 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
 import useSpotify from "./useSpotify";
-import { PlaybackStateType, TrackType, mapPlaybackState, mapQueue } from "./entities";
+import {TrackType, mapTrack } from "./track";
+import { PlaybackState, Queue } from "@spotify/web-api-ts-sdk";
+
+export type PlaybackStateType = {
+  track: TrackType,
+  playing: boolean,
+  progressMs: number | null,
+};
+
+export const mapPlaybackState = (playbackState?: PlaybackState): PlaybackStateType | null => {
+  if (!playbackState) { return null; }
+
+  return {
+    track: mapTrack(playbackState.item),
+    playing: playbackState.is_playing,
+    progressMs: playbackState.progress_ms,
+  }
+}
+
+export const mapQueue = (queue?: Queue): TrackType[] => {
+  if (queue?.queue === undefined) return [];
+  return queue.queue.map(mapTrack) 
+}
 
 type UsePlayerParams = {
   deviceId: string;

@@ -1,6 +1,6 @@
 import PlayButton from "./PlayButton";
 
-import { PlaybackStateType } from "../spotify/entities";
+import { PlaybackStateType } from "../spotify/usePlayer";
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import * as T from "@/components/Typography"; 

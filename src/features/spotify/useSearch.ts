@@ -1,6 +1,13 @@
-import { ItemTypes, Market, MaxInt, SearchResults } from "@spotify/web-api-ts-sdk";
+import { ItemTypes, Market, MaxInt, PartialSearchResult } from "@spotify/web-api-ts-sdk";
 import { useState } from "react";
 import useSpotify from "./useSpotify";
+import { TrackType, mapTrack } from "./track";
+
+type TrackSearchResults = Pick<PartialSearchResult, "tracks">
+
+function mapSearchResults(searchRresults: TrackSearchResults): TrackType[] {
+  return searchRresults?.tracks?.items.map(mapTrack) ?? []
+}
 
 type UseSearchParams = {
   market?: Market,
@@ -8,8 +15,8 @@ type UseSearchParams = {
   limit?: MaxInt<50>,
 }
 
-export default function useSearch({ market = 'HU', type = ['track'], limit=50 }: UseSearchParams) {
-  const [results, setResults] = useState<SearchResults<ItemTypes[]> | null>(null)
+export default function useSearch({ limit=50 }: UseSearchParams) {
+  const [results, setResults] = useState<TrackType[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const { sdk } = useSpotify()
@@ -25,8 +32,8 @@ export default function useSearch({ market = 'HU', type = ['track'], limit=50 }:
 
     setLoading(true);
     try {
-      const nextResult = await sdk.search(query, type, market, limit);
-      setResults(nextResult);
+      const nextResults = await sdk.search(query, ['track'], 'HU', limit);
+      setResults(mapSearchResults(nextResults));
       setError(null);
     } catch (error) {
       if (error instanceof Error) {
