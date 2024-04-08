@@ -44,14 +44,15 @@ export default function AddSong() {
       <DrawerTrigger><Button>Add Song</Button></DrawerTrigger>
       <DrawerContent className="h-[90%]">
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle>Add a new song</DrawerTitle>
+          <DrawerDescription>Search for a song title or an artist or album.</DrawerDescription>
         </DrawerHeader>
         <form className="p-4" onSubmit={handleSearch}>
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full"
+            placeholder="Song title, artist or album... + press ENTER"
           />
         </form>
         <div className="grow overflow-y-auto mt-md px-4">
