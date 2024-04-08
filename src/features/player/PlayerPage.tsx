@@ -3,6 +3,7 @@ import usePlayer from "../spotify/usePlayer"
 import usePlayList from "../spotify/usePlaylist"
 import Player from "./Player"
 import { Muted } from "@/components/Typography"
+import AddSong from "./AddSong"
 
 const DEVICE_ID = '02940197b816cec9220982859d06013182f80dd4'
 const PLAYLIST_ID = '3RKHhNbHpcbrunYzfBKOfA'
@@ -34,7 +35,7 @@ export default function ProfilePage() {
           onTrackFinish={update}
         />
         <section className="flex gap-sm items-center">
-          <Button>Add Song</Button>
+          <AddSong />
           <Button
             variant={"outline"}
             onClick={handlePlay}
@@ -44,18 +45,6 @@ export default function ProfilePage() {
           </Button>
           <Muted>{playlist.name}</Muted>
         </section>
-        {playlist.tracks.items.map((item) => (
-          <div key={item.track.id}>
-            <span>
-              🎶{item.track.name}
-            </span>
-            <button
-              onClick={() => enqueue(`spotify:track:${item.track.id}`)}
-            >
-              ⌛Enqueue
-            </button>
-          </div>
-        ))}
         <h3>⏳Queue</h3>
         {queue.map((item, index) => <div key={index}>🎶 {item.name}</div>)}
       </div>
