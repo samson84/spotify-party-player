@@ -1,5 +1,5 @@
 import { ItemTypes, Market, MaxInt, PartialSearchResult } from "@spotify/web-api-ts-sdk";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSpotify from "./useSpotify";
 import { TrackType, mapTrack } from "./track";
 
@@ -47,5 +47,5 @@ export default function useSearch({ limit=50 }: UseSearchParams) {
     }
   }
 
-  return {results, loading, error, search}
+  return {results, loading, error, search: useCallback(search, [sdk, limit])}
 }

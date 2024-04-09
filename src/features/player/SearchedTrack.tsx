@@ -5,19 +5,20 @@ import { Button } from "@/components/ui/button";
 
 type SearchedTrackProps = {
   track: TrackType,
+  onEnqueue: (trackUri: string) => void,
 }
 
-export default function SearchedTrack({ track }: SearchedTrackProps) {
+export default function SearchedTrack({ track, onEnqueue }: SearchedTrackProps) {
   return (
-    <Card className="hover:bg-accent">
+    <Card className="hover:bg-accent max-w-80 sm:max-w-sm">
       <CardContent className="p-md pt-md flex">
-        <section className="grow">
+        <section className="grow text-nowrap overflow-hidden">
           <T.Large>{track.name}</T.Large>
           <T.Small>{track.artists?.join(', ')}</T.Small>
           <T.Muted>{track.album}</T.Muted>
         </section>
         <section>
-          <Button variant="outline">Enqueue</Button>
+          <Button variant="outline" onClick={() => onEnqueue(track.uri)}>Enqueue</Button>
         </section>
       </CardContent>
     </Card>

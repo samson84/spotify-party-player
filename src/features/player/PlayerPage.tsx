@@ -35,7 +35,7 @@ export default function ProfilePage() {
           onTrackFinish={update}
         />
         <section className="flex gap-sm items-center">
-          <AddSong />
+          <AddSong onEnqueue={enqueue} />
           <Button
             variant={"outline"}
             onClick={handlePlay}
