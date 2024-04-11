@@ -5,6 +5,7 @@ import PlayerPage from "./features/player/PlayerPage"
 import RequireAuth from "./features/router/RequireAuth"
 import { ROUTES } from './features/router/routes'
 import useSpotify from "./features/spotify/useSpotify"
+import SettingsPage from "./features/settings/SettingsPage"
 
 function App() {
   const { loading } = useSpotify()
@@ -22,6 +23,8 @@ function App() {
             <PlayerPage />
           </RequireAuth>
         } />
+        <Route path = {ROUTES.SETTING} element={<RequireAuth><SettingsPage /></RequireAuth>}>
+        </Route>
       </Route>
     </Routes>
   )
