@@ -36,15 +36,9 @@ export default function AddSong({ onEnqueue }: AddSongProps) {
   const { results, error, loading, search } = useSearch({})
 
   const debounced = useMemo(() => debounce((v) => {
-    console.log('debounced', v)
     search(v as string)
   }, 1500), [search]);
 
-  async function handleSearch(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setQuery('')
-    await search(query)
-  }
 
   const handleQueryChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;

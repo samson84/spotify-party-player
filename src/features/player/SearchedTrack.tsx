@@ -10,9 +10,9 @@ type SearchedTrackProps = {
 
 export default function SearchedTrack({ track, onEnqueue }: SearchedTrackProps) {
   return (
-    <Card className="hover:bg-accent max-w-80 sm:max-w-sm">
+    <Card className="hover:bg-accent">
       <CardContent className="p-md pt-md flex">
-        <section className="grow text-nowrap overflow-hidden">
+        <section className="grow">
           <T.Large>{track.name}</T.Large>
           <T.Small>{track.artists?.join(', ')}</T.Small>
           <T.Muted>{track.album}</T.Muted>
