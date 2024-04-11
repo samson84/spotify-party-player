@@ -10,7 +10,7 @@ const DEVICE_ID = '02940197b816cec9220982859d06013182f80dd4'
 const PLAYLIST_ID = '3RKHhNbHpcbrunYzfBKOfA'
 const PLAYLIST_URI = 'spotify:playlist:3RKHhNbHpcbrunYzfBKOfA'
 
-export default function ProfilePage() {
+export default function PlayerPage() {
   const { data: playlist, loading: playlistLoading, error } = usePlayList(PLAYLIST_ID)
   const { playContext, pause, enqueue, queue, resume, playbackState, update } = usePlayer({ deviceId: DEVICE_ID })
 
@@ -28,7 +28,7 @@ export default function ProfilePage() {
 
   if (playlist) {
     return (
-      <div className="flex-none mt-md flex flex-col h-[87vh]">
+      <div className="flex-none flex flex-col h-[86vh]">
         <section>
           <Player
             playbackState={playbackState}
