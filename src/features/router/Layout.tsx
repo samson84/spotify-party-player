@@ -5,15 +5,15 @@ import { Separator } from "@/components/ui/separator";
 
 export default function Layout() {
   return (
-    <div className="w-full min-h-screen flex p-lg">
-      <Card className="shadow-xl flex-grow">
-        <CardContent>
+    <div className="w-full h-screen p-lg flex flex-col">
+      <Card className="shadow-xl flex-grow flex flex-col">
+        <CardContent className="flex-grow">
           <main>
             <Outlet />
           </main>
         </CardContent>
         <Separator />
-        <CardFooter className="flex flex-row justify-end pt-md">
+        <CardFooter className="flex-none flex flex-row justify-end pt-md p-md">
           <AuthInfo />
         </CardFooter>
       </Card>
