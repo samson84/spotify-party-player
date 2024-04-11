@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import useSearch from "../spotify/useSearch"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import SearchedTrack from "./SearchedTrack"
 
@@ -34,7 +34,8 @@ export default function AddSong({ onEnqueue }: AddSongProps) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const { results, error, loading, search } = useSearch({})
-
+  const inputRef = useRef<HTMLInputElement>(null);
+  
   const debounced = useMemo(() => debounce((v) => {
     search(v as string)
   }, 1500), [search]);
@@ -51,8 +52,17 @@ export default function AddSong({ onEnqueue }: AddSongProps) {
     setOpen(false);
   }
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (open) {
+        inputRef.current?.focus();
+      }
+    }, 0);
+    return () => clearTimeout(timeout);
+  }, [open])
+
   return (
-    <Drawer open={open} onOpenChange={(current) => setOpen(current)}>
+    <Drawer open={open} onOpenChange={(current) => { setOpen(current) }}>
       <DrawerTrigger><Button>Add Song</Button></DrawerTrigger>
       <DrawerContent className="h-[90%]">
         <DrawerHeader>
@@ -61,6 +71,7 @@ export default function AddSong({ onEnqueue }: AddSongProps) {
         </DrawerHeader>
         <div className="p-4">
           <Input
+            ref={inputRef}
             value={query}
             onChange={handleQueryChange}
             className="w-full"
