@@ -1,16 +1,17 @@
-import { HTMLProps, ReactNode, useId } from "react"
+import { HTMLAttributes, HTMLProps, ReactNode, useId } from "react"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 
-type InputProps = {
+type InputProps = HTMLProps<HTMLInputElement> & HTMLAttributes<HTMLInputElement> & {
   button?: ReactNode
   label?: string
-  restProps?: HTMLProps<HTMLInputElement>
+  value?: string
 }
 
 export default function CustomInput({
   button,
   label,
+  value,
   ...restProps
 }: InputProps) {
   const inputId = useId()
@@ -21,6 +22,7 @@ export default function CustomInput({
       {(label !== undefined) && <Label htmlFor={inputId}>{label}</Label>}
       <div className="flex w-full max-w-sm items-center space-x-2">
         <Input
+          value={value}
           id={inputId}
           {...restProps}
         />
