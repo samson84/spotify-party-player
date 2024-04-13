@@ -24,7 +24,7 @@ export default function QueueList({queue: tracks}: QueueListProps) {
       <TableBody>
         {
           tracks.map((track, index) => (
-            <TableRow key={track.id}>
+            <TableRow key={`track.id-${index}`}>
               <TableCell>{index===0 && <Badge variant='outline'>Next</Badge>}{" "}{track.name}</TableCell>
               <TableCell>{track.artists?.join(', ')}</TableCell>
               <TableCell>{track.album}</TableCell>
