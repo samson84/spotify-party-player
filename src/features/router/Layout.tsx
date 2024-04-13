@@ -10,8 +10,8 @@ export default function Layout() {
   return (
     <div className="w-full h-screen p-lg flex flex-col">
       <Card className="shadow-xl flex-grow flex flex-col">
-        <CardContent className="flex-grow">
-          <main className="p-md">
+        <CardContent className="flex-grow p-lg pt-lg">
+          <main className="h-full">
             <Outlet />
           </main>
         </CardContent>
