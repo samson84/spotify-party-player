@@ -7,7 +7,7 @@ export default function SettingPage() {
   const { settings } = useSettings()
 
   return (
-    <div className='flex flex-col gap-lg'>
+    <div className='flex flex-col gap-lg h-full items-center justify-center'>
       <T.H3>Settings</T.H3>
 
       <section>
@@ -23,7 +23,7 @@ export default function SettingPage() {
       <section>
         <Input
           label='Device'
-          value={settings?.playlist}
+          value={settings?.device}
           button={<Button variant='outline'>Change Device</Button>}
           disabled={true}
           placeholder={settings?.device ? '' : 'No device selected'}
