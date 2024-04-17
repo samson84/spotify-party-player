@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useCallback, useEffect, useState } from 'react'
-import { SpotifyApi, AuthorizationCodeWithPKCEStrategy } from '@spotify/web-api-ts-sdk';
+import { SpotifyApi, AuthorizationCodeWithPKCEStrategy, DefaultResponseValidator, IValidateResponses } from '@spotify/web-api-ts-sdk';
 import { Scopes } from '@spotify/web-api-ts-sdk';
 import { SpotifyContext } from "./SpotifyContext";
 
@@ -19,9 +19,31 @@ const SCOPES = [
 ];
 const REDIRECT_URI = 'http://localhost:5173';
 
+class ResponseValidator extends DefaultResponseValidator implements IValidateResponses {
+  public async validateResponse(response: Response): Promise<void> {
+    if ([401, 403, 429].includes(response.status)) {
+      super.validateResponse(response);
+    } else if(!response.ok) {
+      let errorBody;
+      try {
+        errorBody = await response.json();
+      } catch {
+        throw new Error('Not able get the requested data. Try again.');
+      }
+      if (errorBody?.error?.message) {
+        throw new Error(errorBody.error.message);
+      } else {
+        throw new Error('Not able get the requested data. Try again.'); 
+      }
+    }
+  }
+}
+
 function createSdk() {
   const auth = new AuthorizationCodeWithPKCEStrategy(CLIENT_ID, REDIRECT_URI, SCOPES);
-  return new SpotifyApi(auth);
+  return new SpotifyApi(auth, {
+    responseValidator: new ResponseValidator(),
+  });
 }
 
 function hasCode() {

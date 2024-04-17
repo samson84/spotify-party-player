@@ -64,8 +64,8 @@ export default function usePlayer({ deviceId }: UsePlayerParams) {
     await update();
   }
 
-  async function enqueue(trackUri: string) {
-    await sdk?.player.addItemToPlaybackQueue(trackUri)
+  async function enqueue(track: TrackType) {
+    await sdk?.player.addItemToPlaybackQueue(track.uri)
     await update();
   }
 

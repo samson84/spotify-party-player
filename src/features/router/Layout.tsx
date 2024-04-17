@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { CassetteTape, Settings } from "lucide-react";
 import { ROUTES } from "./routes";
+import { Toaster } from "@/components/ui/toaster"
 
 export default function Layout() {
   return (
@@ -22,6 +23,7 @@ export default function Layout() {
           <AuthInfo />
         </CardFooter>
       </Card>
+      <Toaster />
     </div>
   )
 }
