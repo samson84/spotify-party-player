@@ -18,13 +18,19 @@ function createStorage<T>(key: string, defaultValue: T) {
 } 
 
 type SettingsType = {
-  playlistId?: string,
-  deviceId?: string,
+  playlist?: {
+    id: string,
+    name: string
+  },
+  device?: {
+    id: string,
+    name: string,
+  },
 }
 
 const defaultSettings: SettingsType = {
-  playlistId: undefined,
-  deviceId: undefined,
+  playlist: undefined,
+  device: undefined,
 }
 
 const storage = createStorage<SettingsType>('settings', defaultSettings);

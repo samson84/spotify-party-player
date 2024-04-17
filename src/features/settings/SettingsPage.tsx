@@ -13,7 +13,7 @@ export default function SettingPage() {
       <section>
         <Input
           label='Playlist'
-          value={settings?.playlist}
+          value={settings?.playlist?.name ?? ''}
           button={<Button variant='outline'>Change Playlist</Button>}
           disabled={true}
           placeholder={settings?.playlist ? '' : 'No playlist selected'}
@@ -23,7 +23,7 @@ export default function SettingPage() {
       <section>
         <Input
           label='Device'
-          value={settings?.device}
+          value={settings?.device?.name ?? ''}
           button={<Button variant='outline'>Change Device</Button>}
           disabled={true}
           placeholder={settings?.device ? '' : 'No device selected'}
