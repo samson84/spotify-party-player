@@ -1,4 +1,4 @@
-import { ItemTypes, Market, MaxInt, PartialSearchResult } from "@spotify/web-api-ts-sdk";
+import { MaxInt, PartialSearchResult } from "@spotify/web-api-ts-sdk";
 import { useCallback } from "react";
 import useSpotify from "./useSpotify";
 import { TrackType, mapTrack } from "./track";
@@ -10,19 +10,17 @@ function mapSearchResults(searchRresults: TrackSearchResults): TrackType[] {
 }
 
 type UseSearchParams = {
-  market?: Market,
-  type?: ItemTypes[],
   limit?: MaxInt<50>,
 }
 
 export default function useSearch({ limit = 50 }: UseSearchParams) {
   const { sdk } = useSpotify();
 
-  async function search(query: string) {
+  async function search(query?: string) {
     if (!sdk) {
       return null;
     }
-    if (query === '') {
+    if (query === '' || query === undefined) {
       return null;
     }
 

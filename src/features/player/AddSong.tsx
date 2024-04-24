@@ -22,7 +22,7 @@ export default function AddSong({ onEnqueue }: AddSongProps) {
       {(close) => (
         <Search<TrackType>
           resultItemComponent={(track, select) => (
-            <SearchedTrack track={track} onEnqueue={() => {
+            <SearchedTrack key={track.id} track={track} onEnqueue={() => {
               select(track);
               close();
             }} />

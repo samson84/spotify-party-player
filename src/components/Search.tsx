@@ -1,7 +1,6 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { Input } from "./ui/input";
-import useFetch from "@/hooks/useFetch";
-import { useToast } from "./ui/use-toast";
+import useFetch from "@/hooks/useErrorHandler";
 
 function debounce(func: (...args: unknown[]) => unknown, timeout: number = 500) {
   let timer: NodeJS.Timeout | null = null;
@@ -17,7 +16,7 @@ function debounce(func: (...args: unknown[]) => unknown, timeout: number = 500) 
 type SearchProps<T> = {
   resultItemComponent: (item: T, select: (item: T) => void) => JSX.Element;
   loadingComponent?: ReactNode;
-  onSearch: (query: string) => Promise<T[] | null>;
+  onSearch: (query?: string) => Promise<T[] | null>;
   onSelect: (item: T) => void;
 }
 
@@ -28,32 +27,23 @@ export default function Search<T>({
   onSelect
 }: SearchProps<T>) {
   const [query, setQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<T[]>([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { doFetch, error, data, loading } = useFetch<T[]>({ fetcher: onSearch });
-  const { toast, dismiss } = useToast();
+  const doFetch = useFetch<T[], string | undefined>({ fetcher: onSearch });
 
-  const debounced = useMemo(() => debounce((v) => {
-    doFetch(v as string)
+  const debounced = useMemo(() => debounce(async (v) => {
+    const results = await doFetch(v as string);
+    setSearchResults(results ?? []);
+    setLoading(false);
   }, 1500), [doFetch]);
 
-
   const handleQueryChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLoading(true);
     const { value } = event.target;
     setQuery(value);
     debounced(value);
   }, [debounced])
-
-  useEffect(() => {
-    
-    if (error !== null) {
-      toast({
-        title: "Something went wrong!",
-        description: error.message,
-      });
-    } else {
-      dismiss();
-    }
-  }, [error, toast, dismiss])
 
   return (
     <>
@@ -68,8 +58,8 @@ export default function Search<T>({
       </div>
       <div className="flex flex-row flex-wrap gap-md px-4 overflow-y-scroll">
         {loading && loadingComponent}
-        {data && !loading && (
-          data.map(item => resultItemComponent(item, onSelect))
+        {searchResults && !loading && (
+          searchResults.map(item => resultItemComponent(item, onSelect))
         )}
       </div>
     </>
