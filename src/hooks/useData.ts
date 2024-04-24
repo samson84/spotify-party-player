@@ -13,6 +13,16 @@ export default function useData<T>({action}: UseDataParams<T>) {
       return data;
   }, [action]);
 
+  const refetch = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await doAction();
+      setData(response);
+    } finally {
+      setLoading(false);
+    }
+  }, [doAction]);
+
   useEffect(() => {
     let ignore = false;
     (async () => {
@@ -23,12 +33,6 @@ export default function useData<T>({action}: UseDataParams<T>) {
           return;
         }
         setData(response);
-      } catch (e) {
-        if (e instanceof Error) {
-          throw e;
-        } else {
-          throw e;
-        }
       } finally {
         setLoading(false);
       }
@@ -38,5 +42,5 @@ export default function useData<T>({action}: UseDataParams<T>) {
     };
   }, [doAction])
 
-  return { data, loading };
+  return { data, loading, refetch};
 }

@@ -12,12 +12,21 @@ import { CircleX } from "lucide-react"
 
 type DrawerProps = {
   triggerLabel: string,
+  triggerVariant?: 'default' | 'outline'
   title: string,
   description: string,
-  children: (close: () => void) => JSX.Element 
+  children: (close: () => void) => JSX.Element
+  onOpenChange?: (open: boolean) => void
 }
 
-export default function CustomDrawer({ triggerLabel, title, description, children }: DrawerProps) {
+export default function CustomDrawer({ 
+  triggerLabel,
+  title,
+  description,
+  children,
+  triggerVariant = 'default',
+  onOpenChange, 
+}: DrawerProps) {
   const [open, setOpen] = useState(false);
 
 
@@ -29,15 +38,19 @@ export default function CustomDrawer({ triggerLabel, title, description, childre
     }
     window.addEventListener('keydown', escapeHandler);
     return () => window.removeEventListener('keydown', escapeHandler);
-  })
+  }, [])
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [open])
 
   function close() {
     setOpen(false);
   }
-  
+
   return (
     <Drawer open={open}>
-      <Button onClick={() => setOpen(true)}>{triggerLabel}</Button>
+      <Button variant={triggerVariant} onClick={() => setOpen(true)}>{triggerLabel}</Button>
       <DrawerContent className="h-[90%]">
         <DrawerHeader className="flex">
           <div className="flex-grow">

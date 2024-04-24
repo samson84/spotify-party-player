@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import { DeviceType } from "../spotify/useDevice"
 
 function createStorage<T>(key: string, defaultValue: T) {
   return {
@@ -22,10 +22,7 @@ type SettingsType = {
     id: string,
     name: string
   },
-  device?: {
-    id: string,
-    name: string,
-  },
+  device?: DeviceType
 }
 
 const defaultSettings: SettingsType = {
@@ -42,10 +39,11 @@ export default function useSettings() {
     setSettings(storage.get())
   }, [])
 
-  function updateSetting<K extends keyof SettingsType>(setting: K, value: SettingsType[K]) {
+  function update<K extends keyof SettingsType>(setting: K, value: SettingsType[K]) {
     storage.set({ ...settings, [setting]: value })
+    setSettings(storage.get())
   }
 
-  return {settings, updateSetting}
+  return {settings, update}
 
 }

@@ -1,6 +1,5 @@
 import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { Input } from "./ui/input";
-import useFetch from "@/hooks/useErrorHandler";
 
 function debounce(func: (...args: unknown[]) => unknown, timeout: number = 500) {
   let timer: NodeJS.Timeout | null = null;
@@ -30,13 +29,12 @@ export default function Search<T>({
   const [searchResults, setSearchResults] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const doFetch = useFetch<T[], string | undefined>({ fetcher: onSearch });
 
   const debounced = useMemo(() => debounce(async (v) => {
-    const results = await doFetch(v as string);
+    const results = await onSearch(v as string);
     setSearchResults(results ?? []);
     setLoading(false);
-  }, 1500), [doFetch]);
+  }, 1500), [onSearch]);
 
   const handleQueryChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);

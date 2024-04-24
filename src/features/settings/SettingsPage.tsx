@@ -2,9 +2,10 @@ import * as T from '@/components/Typography'
 import useSettings from './useSettings'
 import Input from '@/components/Input'
 import { Button } from '@/components/ui/button'
+import SelectDevice from './SelectDevice'
 
 export default function SettingPage() {
-  const { settings } = useSettings()
+  const { settings, update } = useSettings()
 
   return (
     <div className='flex flex-col gap-lg h-full items-center justify-center'>
@@ -24,7 +25,7 @@ export default function SettingPage() {
         <Input
           label='Device'
           value={settings?.device?.name ?? ''}
-          button={<Button variant='outline'>Change Device</Button>}
+          button={<SelectDevice onSelect={(device) => update('device', device)} />}
           disabled={true}
           placeholder={settings?.device ? '' : 'No device selected'}
         />

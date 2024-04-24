@@ -1,17 +1,17 @@
 import { useToast } from "@/components/ui/use-toast";
 import { useCallback } from "react";
 
-type UseFetchParams<T, Q> = {
-  fetcher: (query?: Q) => Promise<T | null>;
+type UseFetchParams<T, A extends Array<unknown>> = {
+  fetcher: (...args: A) => Promise<T | null>;
 }
 
-export default function useErrorHandler<T, Q>({ fetcher }: UseFetchParams<T, Q>) {
+export default function useErrorHandler<T, A extends Array<unknown>>({ fetcher }: UseFetchParams<T, A>): (...args: A) => Promise<T | null | undefined> {
   const { toast, dismiss } = useToast();
 
-  const doAction = useCallback(async (query?: Q) => {
+  const doAction = useCallback(async (...args: A) => {
     dismiss();
     try {
-      const data = await fetcher(query);
+      const data = await fetcher(...args);
       return data
     } catch (error) {
 
@@ -20,6 +20,7 @@ export default function useErrorHandler<T, Q>({ fetcher }: UseFetchParams<T, Q>)
           title: "Something went wrong!",
           description: error.message,
         });
+        throw error;
       } else {
         throw error;
       }
