@@ -73,6 +73,7 @@ module.exports = {
       },
       gap: {
         'lg': '1rem',
+        'md': '0.5rem',
       },
       fontSize: {
         'hero': '4rem',

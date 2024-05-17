@@ -5,7 +5,7 @@ import { Devices } from "@spotify/web-api-ts-sdk";
 import useData from "@/hooks/useData";
 
 export type DeviceType = {
-  id: string | null | undefined,
+  id: string | null,
   name: string,
   type: string,
   active: boolean,

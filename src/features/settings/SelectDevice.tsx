@@ -31,7 +31,7 @@ export default function SelectDevice({ onSelect }: SelectDeviceProps) {
       triggerLabel="Change Device"
       triggerVariant="outline"
       description="Changing the device will immediately starts the playing on the new device."
-      title="Select a device to play music on"
+      title="Select Device"
       onOpenChange={handleOpenChange}
     >
       {(close) => (

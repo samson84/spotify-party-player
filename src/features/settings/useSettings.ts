@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { DeviceType } from "../spotify/useDevice"
+import { PlaylistType } from "../spotify/usePlaylist"
 
 function createStorage<T>(key: string, defaultValue: T) {
   return {
@@ -18,10 +19,7 @@ function createStorage<T>(key: string, defaultValue: T) {
 } 
 
 type SettingsType = {
-  playlist?: {
-    id: string,
-    name: string
-  },
+  playlist?: PlaylistType,
   device?: DeviceType
 }
 

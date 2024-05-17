@@ -3,6 +3,7 @@ import useSettings from './useSettings'
 import Input from '@/components/Input'
 import { Button } from '@/components/ui/button'
 import SelectDevice from './SelectDevice'
+import SelectPlaylist from './SelectPlaylist'
 
 export default function SettingPage() {
   const { settings, update } = useSettings()
@@ -15,7 +16,7 @@ export default function SettingPage() {
         <Input
           label='Playlist'
           value={settings?.playlist?.name ?? ''}
-          button={<Button variant='outline'>Change Playlist</Button>}
+          button={<SelectPlaylist onSelect={(playlist) => update('playlist', playlist)} />}
           disabled={true}
           placeholder={settings?.playlist ? '' : 'No playlist selected'}
         />
