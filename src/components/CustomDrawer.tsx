@@ -42,7 +42,7 @@ export default function CustomDrawer({
 
   useEffect(() => {
     onOpenChange?.(open);
-  }, [open])
+  }, [open, onOpenChange])
 
   function close() {
     setOpen(false);

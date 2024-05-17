@@ -3,9 +3,10 @@ import { useCallback } from "react";
 
 type UseFetchParams<T, A extends Array<unknown>> = {
   fetcher: (...args: A) => Promise<T | null>;
+  shouldThrow?: boolean;
 }
 
-export default function useErrorHandler<T, A extends Array<unknown>>({ fetcher }: UseFetchParams<T, A>): (...args: A) => Promise<T | null | undefined> {
+export default function useErrorHandler<T, A extends Array<unknown>>({ fetcher, shouldThrow = false }: UseFetchParams<T, A>): (...args: A) => Promise<T | null | undefined> {
   const { toast, dismiss } = useToast();
 
   const doAction = useCallback(async (...args: A) => {
@@ -20,12 +21,14 @@ export default function useErrorHandler<T, A extends Array<unknown>>({ fetcher }
           title: "Something went wrong!",
           description: error.message,
         });
-        throw error;
+        if (!shouldThrow) {
+          throw error
+        }
       } else {
         throw error;
       }
     }
-  }, [fetcher, dismiss, toast]);
+  }, [fetcher, dismiss, toast, shouldThrow]);
 
   return doAction;
 }

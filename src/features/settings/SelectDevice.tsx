@@ -2,7 +2,7 @@ import CustomDrawer from "@/components/CustomDrawer";
 import useDevice, { DeviceType } from "../spotify/useDevice";
 import Device from "./Device";
 import DevicesSkeleton from "./DevicesSkeleton";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 type SelectDeviceProps = {
   onSelect: (device: DeviceType) => void
@@ -22,13 +22,17 @@ export default function SelectDevice({ onSelect }: SelectDeviceProps) {
     }
   }
 
+  const handleOpenChange = useCallback((open: boolean) => {
+    open && refetch()
+  }, [refetch])
+
   return (
     <CustomDrawer
       triggerLabel="Change Device"
       triggerVariant="outline"
       description="Changing the device will immediately starts the playing on the new device."
       title="Select a device to play music on"
-      onOpenChange={(open) => open && refetch()}
+      onOpenChange={handleOpenChange}
     >
       {(close) => (
         <div className="flex flex-col flex-wrap gap-md px-4 overflow-y-auto">
